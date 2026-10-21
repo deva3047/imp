@@ -1,2 +1,2 @@
-# mcq-system-state
-Persistent state storage for MCQ system
+sudo -i #Go In /Root
+exit #Exit To Normal User
