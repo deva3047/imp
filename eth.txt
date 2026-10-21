@@ -1,0 +1,593 @@
+1
+
+P – PRACTICAL: Set up Kali Linux in VirtualBox
+
+Download the official Kali VirtualBox image; install VirtualBox; import the OVA or follow Kali’s VM instructions; assign reasonable RAM/CPU; keep networking on NAT or isolated lab mode; start Kali and verify:
+
+ip a
+
+uname -a
+
+P – PRACTICAL: Capture ICMP and TCP in Wireshark
+
+Open Wireshark, choose the active interface and start capture. Generate test traffic, stop capture, apply filters `icmp` and `tcp`, inspect source/destination and save as slip1_capture.pcapng.
+
+ping -c 4 8.8.8.8
+
+curl -I https://example.com
+
+P – PRACTICAL: Enumerate SNMP with Nmap
+
+Run against an authorized lab host. Record any system information returned; UDP may show open|filtered.
+
+sudo nmap -sU -p 161 --script snmp-info <LAB-IP>
+
+
+2
+
+P – PRACTICAL: Configure NAT and Bridged networking
+
+Shut down the VM. VirtualBox > Settings > Network > Adapter 1. Choose NAT, start Kali and test connectivity. Shut down and switch to Bridged Adapter, select the host network adapter, restart and compare IP addresses. Use Bridged only on a permitted network.
+
+ip a
+
+ip route
+
+ping -c 4 8.8.8.8
+
+P – PRACTICAL: WHOIS lookup
+
+Run WHOIS and note registrar, dates, status and name servers if present. Some details may be privacy-protected.
+
+whois example.com
+
+P – PRACTICAL: Basic Linux commands
+
+Run each command and explain its purpose: current folder, files, user, network, route and simple file creation.
+
+pwd
+
+ls -la
+
+whoami
+
+ip a
+
+ip route
+
+mkdir practice
+
+cd practice
+
+touch notes.txt
+
+
+3
+
+P – PRACTICAL: Set up Metasploitable2 lab
+
+Import Kali and Metasploitable2 VMs; place both on the same Host-only/internal network; do not expose Metasploitable2 publicly; start both, note target IP and test lab connectivity.
+
+ip a
+
+ping -c 4 <LAB-IP>
+
+P – PRACTICAL: SNMP enumeration
+
+Scan UDP 161 and note only information actually returned.
+
+sudo nmap -sU -p 161 --script snmp-info <LAB-IP>
+
+P – PRACTICAL: Service version detection
+
+Scan your lab target and record open port, service and detected version.
+
+nmap -sV <LAB-IP>
+
+sudo nmap -sV -O <LAB-IP>
+
+
+4
+
+P – PRACTICAL: Scan web app with Nikto
+
+Use only a lab web server. Review findings such as risky files, server headers and outdated software clues; verify findings before calling them vulnerabilities.
+
+nikto -h http://<LAB-IP>
+
+P – PRACTICAL: DNS records with nslookup
+
+Query address, name-server and mail-exchanger records; record returned values.
+
+nslookup example.com
+
+nslookup -type=NS example.com
+
+nslookup -type=MX example.com
+
+P – PRACTICAL: Passive reconnaissance with Shodan
+
+Search an authorized organization or training example at shodan.io. Record visible banners, ports and version clues with date/source. Do not log in to or exploit discovered systems.
+
+Use the Shodan website search interface.
+
+
+5
+
+T – THEORY: Install Kali in VMware and compare VirtualBox
+
+Install VMware, open/import the official Kali VM, allocate CPU/RAM and start it. Verify using `ip a`. Both VMware and VirtualBox run virtual machines; VirtualBox has a widely used free base, while VMware offers its own integration and commercial features. Performance depends on host hardware and settings.
+
+ip a
+
+uname -a
+
+P – PRACTICAL: Network topology using Nmap
+
+Discover hosts on the authorized subnet; traceroute can show route hops. Nmap output is not always a graphical map, so draw a simple diagram from observed hosts/hops if required.
+
+sudo nmap -sn <LAB-SUBNET>/24
+
+sudo nmap --traceroute -sn <LAB-IP>
+
+P – PRACTICAL: Discover live hosts
+
+Find your actual subnet with `ip route`, then run host discovery and note hosts marked up.
+
+ip route
+
+sudo nmap -sn <LAB-SUBNET>/24
+
+
+6
+
+T – THEORY: Web attack techniques / malware-infected file wording
+
+The question wording is unclear. Do not create or distribute real malware. Safely demonstrate SQL injection, XSS, CSRF or insecure upload only in an isolated DVWA/OWASP Juice Shop lab. For file-upload defense, allow-list types, validate content, rename files, store outside web root, scan files and enforce access controls. Ask the teacher if they require a specific safe simulation.
+
+P – PRACTICAL: Nmap topology and live hosts
+
+Discover hosts on your lab subnet and optionally trace a lab target. Record observed hosts and hops.
+
+sudo nmap -sn <LAB-SUBNET>/24
+
+traceroute <LAB-IP>
+
+P – PRACTICAL: Discover live hosts
+
+`-sn` performs host discovery without a port scan. Replace the subnet with your real lab network.
+
+sudo nmap -sn <LAB-SUBNET>/24
+
+
+7
+
+P – PRACTICAL: Scan range, live hosts, TCP ports and OS
+
+First identify subnet, discover live hosts, then scan ports/services and attempt OS detection on an authorized lab range. Record IP, ports, service/version and OS guess. OS detection may be imperfect.
+
+ip route
+
+sudo nmap -sn <LAB-SUBNET>/24
+
+sudo nmap -sS -sV <LAB-SUBNET>/24
+
+sudo nmap -O <LAB-IP>
+
+P – PRACTICAL: John the Ripper for MD5 and SHA-256
+
+Use a sample hashes.txt supplied for class. Specify the format and wordlist; show results. If RockYou is compressed, extract it once. A password may not be found if it is not in the list.
+
+john --format=Raw-MD5 hashes.txt --wordlist=/usr/share/wordlists/rockyou.txt
+
+john --format=Raw-SHA256 hashes.txt --wordlist=/usr/share/wordlists/rockyou.txt
+
+john --show hashes.txt
+
+P – PRACTICAL: Nmap NSE service enumeration
+
+Use default scripts on an authorized lab host and document the results. Avoid intrusive scripts unless the lab specifically approves them.
+
+nmap -sV --script=default <LAB-IP>
+
+
+8
+
+P – PRACTICAL: SQLMap database enumeration in a lab
+
+Use a deliberately vulnerable app you control. Start with database enumeration; only continue within the teacher-approved scope. Never dump real users’ passwords/data.
+
+sqlmap -u "http://<LAB-IP>/item.php?id=1" --dbs
+
+P – PRACTICAL: WHOIS
+
+Record registrar, dates and name servers where available.
+
+whois example.com
+
+P – PRACTICAL: Three users and John
+
+If asked, create local test accounts with administrator permission. For hash cracking, use teacher-provided sample hashes, not extracted real account hashes. Identify format and show the results.
+
+sudo adduser testuser1
+
+sudo adduser testuser2
+
+sudo adduser testuser3
+
+john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
+
+john --show hashes.txt
+
+
+9
+
+P – PRACTICAL: Nessus setup and scan
+
+Install the package from Tenable’s official site, follow its installation steps, start the service as instructed, open the local web UI (commonly https://localhost:8834), complete activation, scan only a lab host and export findings.
+
+sudo systemctl start nessusd
+
+P – PRACTICAL: WHOIS
+
+Run lookup and record fields actually shown.
+
+whois example.com
+
+P – PRACTICAL: Wireshark ICMP/TCP
+
+Start capture, generate ping and HTTPS header traffic, filter `icmp` and `tcp`, inspect packet details and save the capture.
+
+ping -c 4 8.8.8.8
+
+curl -I https://example.com
+
+
+10
+
+P – PRACTICAL: Create users and test hashes
+
+Create users only if authorized. Use teacher-provided sample hashes for cracking; identify hash format and use John with a wordlist. Do not extract other users’ credentials.
+
+sudo adduser labuser1
+
+sudo adduser labuser2
+
+sudo adduser labuser3
+
+hashid '<SAMPLE-HASH>'
+
+john --format=Raw-MD5 --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
+
+P – PRACTICAL: Privilege configuration in lab
+
+Check identity, group memberships and allowed sudo commands. Explain any unsafe permission and recommend least privilege; do not attempt unauthorized escalation.
+
+whoami
+
+id
+
+sudo -l
+
+P – PRACTICAL: Host/port/version enumeration
+
+Discover lab hosts, then detect services on an approved target and record actual output.
+
+sudo nmap -sn <LAB-SUBNET>/24
+
+nmap -sV -p 1-1000 <LAB-IP>
+
+
+11
+
+P – PRACTICAL: SMB/Windows enumeration
+
+On an authorized lab SMB host, run safe discovery scripts and record reported OS/SMB details.
+
+nmap -p 139,445 --script smb-os-discovery <LAB-IP>
+
+nmap -p 445 --script smb-protocols <LAB-IP>
+
+T – THEORY: HTTP/HTTPS ports and headers
+
+HTTP commonly uses TCP 80; HTTPS commonly uses TCP 443 with TLS encryption. Inspect response headers on a test page. Recommend HTTPS and secure headers; server headers can be absent or inaccurate.
+
+curl -I https://example.com
+
+
+12
+
+P – PRACTICAL: WHOIS and DNS reconnaissance
+
+Use WHOIS plus address, NS and MX DNS lookups; record fields actually returned.
+
+whois example.com
+
+nslookup example.com
+
+nslookup -type=NS example.com
+
+nslookup -type=MX example.com
+
+P – PRACTICAL: Passive OSINT
+
+Research only public information for an authorized organization/training example using public LinkedIn company pages, GitHub organization pages and job posts. Record source URLs/date; avoid private personal data.
+
+Use the relevant public websites in a browser.
+
+T – THEORY: Attack flow and phishing protection
+
+Flow: fake email → click/link or attachment → credentials/device may be compromised → unauthorized access → data/service impact. Protection: verify sender/URL, avoid unexpected attachments, enable MFA, update software, report phishing and use mail filtering.
+
+
+13
+
+T – THEORY: Metasploit payload types
+
+A payload is the action/code delivered after exploitation. A single payload is self-contained; a staged payload loads a larger second stage; Meterpreter is an advanced interactive payload used in authorized labs. Use only instructor-approved lab targets.
+
+P – PRACTICAL: Observe HTTP traffic
+
+Capture on your own interface, create a connection to a lab HTTP server, filter HTTP traffic and inspect request/response headers. HTTPS content is encrypted by default. Do not capture other people’s credentials.
+
+curl -I http://<LAB-WEB-SERVER>
+
+# Wireshark display filter: http
+
+
+14
+
+P – PRACTICAL: theHarvester public information
+
+Use a domain you are authorized to assess; record source and date and treat results as leads, not guaranteed facts.
+
+theHarvester -d example.com -b crtsh
+
+P – PRACTICAL: Traceroute
+
+Record route hops; asterisks may mean routers do not reply, not necessarily that the route is broken.
+
+traceroute example.com
+
+P – PRACTICAL: OS detection
+
+Run OS detection on a lab host and record the estimate and limitations.
+
+sudo nmap -O <LAB-IP>
+
+sudo nmap -sV -O <LAB-IP>
+
+
+15
+
+P – PRACTICAL: Capture packets with tcpdump
+
+Identify the interface, capture a limited number of packets to a PCAP file, then read the file. PCAP files can contain sensitive data.
+
+ip a
+
+sudo tcpdump -i <INTERFACE> -c 100 -w capture.pcap
+
+tcpdump -r capture.pcap
+
+P – PRACTICAL: Analyze/count TCP, UDP and ICMP
+
+Open capture.pcap in Wireshark. Apply `tcp`, `udp` and `icmp` separately; note displayed packet counts. Counts depend on captured traffic.
+
+
+16
+
+P – PRACTICAL: Generate MD5 hash
+
+Create a test file and hash it. MD5 is not suitable for modern password storage.
+
+echo -n 'hello123' > sample.txt
+
+md5sum sample.txt
+
+P – PRACTICAL: Identify hash type
+
+Hashid suggests likely formats but cannot always identify a hash uniquely. Use a sample hash only.
+
+hashid '<SAMPLE-HASH>'
+
+T – THEORY: Hashing vs encryption
+
+Hashing is generally one-way and produces a digest for integrity/password verification. Encryption is reversible with the correct key and protects confidentiality. Password hashes are not decrypted; guesses are tested. Use salted Argon2id/bcrypt/scrypt/PBKDF2 rather than plain MD5/SHA-256 for passwords.
+
+
+17
+
+P – PRACTICAL: Find directories using Dirb
+
+Run only against your lab server. Verify discovered paths and status codes.
+
+dirb http://<LAB-IP>/
+
+P – PRACTICAL: Identify default web page
+
+Open the lab URL in a browser or inspect headers/page content. Record the actual status and visible title/content.
+
+curl -I http://<LAB-IP>/
+
+curl -s http://<LAB-IP>/ | head
+
+P – PRACTICAL: Find directories using Gobuster
+
+Use an installed wordlist; record paths and status codes. Do not run against unauthorized targets.
+
+gobuster dir -u http://<LAB-IP>/ -w /usr/share/wordlists/dirb/common.txt
+
+
+18
+
+P – PRACTICAL: Service version detection
+
+Scan the authorized lab target and record port, state, service and detected version.
+
+nmap -sV <LAB-IP>
+
+nmap -sV -p 80,443 <LAB-IP>
+
+P – PRACTICAL: Identify web server and three services
+
+Read the actual Nmap output. Note web server product/version if detected and list three other services that really appear in the scan. Do not invent version numbers.
+
+
+19
+
+P – PRACTICAL: DNS lookup for three sites
+
+Run each lookup and record returned IPs; answers may vary by time/location.
+
+nslookup google.com
+
+nslookup facebook.com
+
+nslookup example.com
+
+P – PRACTICAL: Registrar and name servers
+
+Run WHOIS and find Registrar and Name Server fields if present. Some information may be hidden or unavailable.
+
+whois example.com
+
+
+20
+
+P – PRACTICAL: Capture two minutes in Wireshark
+
+Choose active interface, start capture, let it run about two minutes while normal lab traffic occurs, stop and save as two_min_capture.pcapng. Record interface and packet count.
+
+P – PRACTICAL: HTTP filter
+
+Apply `http`, inspect HTTP protocol details. If no packets appear, capture traffic to a permitted plain-HTTP lab page; HTTPS is encrypted by default.
+
+P – PRACTICAL: ICMP filter and source/destination
+
+Capture while pinging a lab target, apply `icmp`, select echo request/reply and record source/destination IPs. Request and reply directions are reversed.
+
+ping -c 4 <LAB-IP>
+
+
+21
+
+P – PRACTICAL: Scan localhost TCP ports
+
+Run Nmap against localhost and optionally detect service versions. Record only ports shown open.
+
+nmap 127.0.0.1
+
+nmap -sV 127.0.0.1
+
+P – PRACTICAL: Scan ports 80,443,22,21
+
+Scan the authorized target. Port 80=HTTP, 443=HTTPS, 22=SSH, 21=FTP. Ports may be closed or filtered.
+
+nmap -sV -p 80,443,22,21 <LAB-IP>
+
+
+22
+
+P – PRACTICAL: John with RockYou
+
+Use a teacher-provided hash file. If RockYou is compressed, extract it once. Show recovered results; John may not crack every hash.
+
+john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
+
+john --show hashes.txt
+
+P – PRACTICAL: Hashid and Hashcat MD5 vs SHA-256
+
+Hashcat mode 0 is MD5; mode 1400 is raw SHA-256. Use sample hashes only. MD5 and plain SHA-256 are fast and not recommended for password storage.
+
+hashid '<SAMPLE-HASH>'
+
+hashcat -m 0 md5.txt /usr/share/wordlists/rockyou.txt
+
+hashcat -m 1400 sha256.txt /usr/share/wordlists/rockyou.txt
+
+
+23
+
+P – PRACTICAL: Ping sweep 192.168.1.0/24
+
+Check your real subnet first. If it is the stated lab subnet, discover live hosts and record those reported up.
+
+ip route
+
+sudo nmap -sn 192.168.1.0/24
+
+P – PRACTICAL: List listening network ports
+
+Explain -t TCP, -u UDP, -l listening, -n numeric, -p process. Use ss if netstat is not installed.
+
+sudo netstat -tulnp
+
+sudo ss -tulnp
+
+T – THEORY: TCP vs UDP
+
+TCP is connection-oriented and reliable/ordered (e.g. HTTPS, SSH). UDP sends datagrams without guaranteeing delivery/order (e.g. DNS queries, streaming or games).
+
+
+24
+
+P – PRACTICAL: Configure network and verify ping
+
+Check interface and route; ping the default gateway, a public IP and a domain. If IP works but domain fails, DNS may be the issue. Some networks block ICMP.
+
+ip a
+
+ip route
+
+ping -c 4 <DEFAULT-GATEWAY>
+
+ping -c 4 8.8.8.8
+
+ping -c 4 example.com
+
+P – PRACTICAL: Display interface details
+
+Use ip a or ifconfig; record interface name, IP, MAC and interface state.
+
+ip a
+
+ifconfig
+
+P – PRACTICAL: Find IP, MAC and gateway
+
+IP appears in `ip -br a`; MAC appears as `link/ether` in `ip link`; default gateway appears after `default via` in `ip route`. Values depend on the network.
+
+ip -br a
+
+ip link
+
+ip route
+
+
+25
+
+P – PRACTICAL: Capture TCP three-way handshake
+
+Start Wireshark before creating a new connection. Generate a new test connection, filter SYN packets and identify SYN, SYN-ACK, ACK. Capture screenshots showing addresses and TCP flags.
+
+curl -I https://example.com
+
+# Wireshark filter: tcp.flags.syn == 1
+
+P – PRACTICAL: Nmap OS detection
+
+Scan only an authorized lab target; record OS guess and confidence/limitations.
+
+sudo nmap -O <LAB-IP>
+
+sudo nmap -sV -O <LAB-IP>
+
+P – PRACTICAL: List active network connections
+
+Use netstat or modern ss. Explain protocol, local/foreign addresses, state and process if shown.
+
+sudo netstat -tunap
+
+sudo ss -tunap
