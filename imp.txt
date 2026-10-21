@@ -1,0 +1,1525 @@
+
+SLIP 1
+Question 1: Write a Python program to implement Linear Search.
+(Exact logic from your 1.py screenshot)
+l1 = []
+found = 0
+n = int(input("enter size:"))
+for i in range(n):
+    l1.append(int(input("enter element:")))
+print("List:", l1)
+
+search = int(input("enter search element:"))
+for i in range(n):
+    if search == l1[i]:
+        print("element found at index", i)
+        found = 1
+        break
+if found == 0:
+    print("element not found")
+
+
+Question 2: Write a program to perform Depth First Search (DFS) traversal on the graph {A, B, C, D, E, F}.
+(Exact logic from your DFS & BFS screenshots)
+def dfs(graph, vertex, visited):
+    visited.add(vertex)
+    print(vertex, end=" ")
+    for neighbour in graph[vertex]:
+        if neighbour not in visited:
+            dfs(graph, neighbour, visited)
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D'],
+    'C': ['E'],
+    'D': ['F'],
+    'E': [],
+    'F': []
+}
+visited = set()
+print("DFS traversal starting from A:")
+dfs(graph, 'A', visited)
+
+
+SLIP 2
+Question 1: Write a Python program to implement Binary Search (iterative version).
+l1 = []
+found = 0
+n = int(input("enter size:"))
+for i in range(n):
+    l1.append(int(input("enter sorted element:")))
+print("Sorted List:", l1)
+
+search = int(input("enter search element:"))
+low = 0
+high = n - 1
+
+while low <= high:
+    mid = (low + high) // 2
+    if l1[mid] == search:
+        print("element found at index", mid)
+        found = 1
+        break
+    elif l1[mid] < search:
+        low = mid + 1
+    else:
+        high = mid - 1
+
+if found == 0:
+    print("element not found")
+
+
+Question 2: Write a program to perform Breadth First Search (BFS) traversal on the graph {A, B, C, D, E, F}.
+(Exact code from your BFS screenshot)
+from collections import deque
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D'],
+    'C': ['E'],
+    'D': ['F'],
+    'E': [],
+    'F': []
+}
+def bfs(graph, start):
+    visited = set()
+    queue = deque([start])
+    visited.add(start)
+    while queue:
+        vertex = queue.popleft()
+        print(vertex, end=" ")
+        for neighbour in graph[vertex]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                queue.append(neighbour)
+
+print("BFS traversal:")
+bfs(graph, 'A')
+
+
+SLIP 3
+Question 1: Write a Python program to implement Bubble Sort.
+l1 = []
+n = int(input("enter size:"))
+for i in range(n):
+    l1.append(int(input("enter element:")))
+
+for i in range(n - 1):
+    for j in range(n - 1 - i):
+        if l1[j] > l1[j + 1]:
+            l1[j], l1[j + 1] = l1[j + 1], l1[j]
+
+print("Sorted list in ascending order:", l1)
+
+
+Question 2: Write a Python program to represent a graph using adjacency list (at least 6 vertices).
+(Uses your exact graph dictionary structure)
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D'],
+    'C': ['E'],
+    'D': ['F'],
+    'E': [],
+    'F': []
+}
+print("Adjacency List of the Graph:")
+for vertex in graph:
+    print(vertex, "->", graph[vertex])
+
+
+SLIP 4
+Question 1: Write a Python program to implement Insertion Sort.
+l1 = []
+n = int(input("enter size:"))
+for i in range(n):
+    l1.append(int(input("enter element:")))
+
+for i in range(1, n):
+    key = l1[i]
+    j = i - 1
+    while j >= 0 and key < l1[j]:
+        l1[j + 1] = l1[j]
+        j = j - 1
+    l1[j + 1] = key
+
+print("Sorted list in ascending order:", l1)
+
+
+Question 2: Write a program to perform Breadth First Search (BFS) traversal on the graph {A, B, C, D, E, F}.
+(Same as Slip 2, Question 2)
+from collections import deque
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D'],
+    'C': ['E'],
+    'D': ['F'],
+    'E': [],
+    'F': []
+}
+def bfs(graph, start):
+    visited = set()
+    queue = deque([start])
+    visited.add(start)
+    while queue:
+        vertex = queue.popleft()
+        print(vertex, end=" ")
+        for neighbour in graph[vertex]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                queue.append(neighbour)
+
+print("BFS traversal:")
+bfs(graph, 'A')
+
+
+SLIP 5
+Question 1: Write a Python program to implement Merge Sort.
+def merge_sort(l1):
+    if len(l1) > 1:
+        mid = len(l1) // 2
+        left = l1[:mid]
+        right = l1[mid:]
+
+        merge_sort(left)
+        merge_sort(right)
+
+        i = j = k = 0
+        while i < len(left) and j < len(right):
+            if left[i] < right[j]:
+                l1[k] = left[i]
+                i += 1
+            else:
+                l1[k] = right[j]
+                j += 1
+            k += 1
+
+        while i < len(left):
+            l1[k] = left[i]
+            i += 1
+            k += 1
+
+        while j < len(right):
+            l1[k] = right[j]
+            j += 1
+            k += 1
+
+l1 = []
+n = int(input("enter size:"))
+for i in range(n):
+    l1.append(int(input("enter element:")))
+
+merge_sort(l1)
+print("Sorted list in ascending order:", l1)
+
+
+Question 2: Write a program to perform Preorder traversal (non-recursive) using stacks (Nodes A to G).
+(Uses your class node tree structure from Image 15)
+class node:
+    def __init__(self, data):
+        self.left = None
+        self.right = None
+        self.data = data
+
+node1 = node('A')
+node2 = node('B')
+node3 = node('C')
+node4 = node('D')
+node5 = node('E')
+node6 = node('F')
+node7 = node('G')
+
+node1.left = node2
+node1.right = node3
+node2.left = node4
+node2.right = node5
+node3.left = node6
+node3.right = node7
+
+def preorder_non_recursive(root):
+    if root is None:
+        return
+    stack = [root]
+    while len(stack) > 0:
+        curr = stack.pop()
+        print(curr.data, end=" ")
+        if curr.right is not None:
+            stack.append(curr.right)
+        if curr.left is not None:
+            stack.append(curr.left)
+
+print("Preorder traversal (non-recursive):")
+preorder_non_recursive(node1)
+
+
+SLIP 6
+Question 1: Write a Python program to implement Quick Sort (last element as pivot).
+def partition(l1, low, high):
+    pivot = l1[high]
+    i = low - 1
+    for j in range(low, high):
+        if l1[j] <= pivot:
+            i = i + 1
+            l1[i], l1[j] = l1[j], l1[i]
+    l1[i + 1], l1[high] = l1[high], l1[i + 1]
+    return i + 1
+
+def quick_sort(l1, low, high):
+    if low < high:
+        pi = partition(l1, low, high)
+        quick_sort(l1, low, pi - 1)
+        quick_sort(l1, pi + 1, high)
+
+l1 = []
+n = int(input("enter size:"))
+for i in range(n):
+    l1.append(int(input("enter element:")))
+
+quick_sort(l1, 0, n - 1)
+print("Sorted list in ascending order:", l1)
+
+
+Question 2: Write a program to perform Postorder traversal (recursive) of the binary tree (Nodes A to G).
+(Exact style from your Preorder screenshot, adjusted to Left -> Right -> Root)
+class node:
+    def __init__(self, data):
+        self.left = None
+        self.right = None
+        self.data = data
+
+node1 = node('A')
+node2 = node('B')
+node3 = node('C')
+node4 = node('D')
+node5 = node('E')
+node6 = node('F')
+node7 = node('G')
+
+node1.left = node2
+node1.right = node3
+node2.left = node4
+node2.right = node5
+node3.left = node6
+node3.right = node7
+
+def postorder(node1):
+    if node1 != None:
+        postorder(node1.left)
+        postorder(node1.right)
+        print(node1.data, end=" ")
+
+print("Postorder traversal:")
+postorder(node1)
+
+
+SLIP 7
+Question 1: Dynamically create a linked list with at least 5 nodes. Traverse and display all nodes.
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+head = None
+temp = None
+n = int(input("enter number of nodes (at least 5):"))
+
+for i in range(n):
+    val = int(input("enter node data:"))
+    newnode = node(val)
+    if head is None:
+        head = temp = newnode
+    else:
+        temp.next = newnode
+        temp = newnode
+
+print("Linked List elements:")
+temp = head
+while temp is not None:
+    print(temp.data)
+    temp = temp.next
+
+
+Question 2: Perform Inorder and Preorder traversal (non-recursive) using a stack (Nodes A to G).
+class node:
+    def __init__(self, data):
+        self.left = None
+        self.right = None
+        self.data = data
+
+node1 = node('A')
+node2 = node('B')
+node3 = node('C')
+node4 = node('D')
+node5 = node('E')
+node6 = node('F')
+node7 = node('G')
+
+node1.left = node2
+node1.right = node3
+node2.left = node4
+node2.right = node5
+node3.left = node6
+node3.right = node7
+
+def inorder_non_recursive(root):
+    stack = []
+    curr = root
+    while curr is not None or len(stack) > 0:
+        while curr is not None:
+            stack.append(curr)
+            curr = curr.left
+        curr = stack.pop()
+        print(curr.data, end=" ")
+        curr = curr.right
+
+def preorder_non_recursive(root):
+    stack = [root]
+    while len(stack) > 0:
+        curr = stack.pop()
+        print(curr.data, end=" ")
+        if curr.right:
+            stack.append(curr.right)
+        if curr.left:
+            stack.append(curr.left)
+
+print("Inorder (non-recursive):")
+inorder_non_recursive(node1)
+print("\nPreorder (non-recursive):")
+preorder_non_recursive(node1)
+
+
+SLIP 8
+Question 1: Write a program to insert a new node at the beginning of a linked list (e.g., 100).
+(Exact code from your 10.53.41 AM (1) screenshot)
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+node1 = node(5)
+node2 = node(10)
+node3 = node(15)
+node4 = node(20)
+node5 = node(25)
+
+temp = head = node1
+
+node1.next = node2
+node2.next = node3
+node3.next = node4
+node4.next = node5
+
+new = int(input("enter number to add at beginning (e.g. 100):"))
+newnode = node(new)
+newnode.next = temp
+temp = head = newnode
+
+print("Updated Linked List:")
+while temp is not None:
+    print(temp.data)
+    temp = temp.next
+
+
+Question 2: Construct a binary tree with at least 7 nodes and perform Inorder traversal (recursive).
+(Exact style from your Preorder screenshot)
+class node:
+    def __init__(self, data):
+        self.left = None
+        self.right = None
+        self.data = data
+
+node1 = node('A')
+node2 = node('B')
+node3 = node('C')
+node4 = node('D')
+node5 = node('E')
+node6 = node('F')
+node7 = node('G')
+
+node1.left = node2
+node1.right = node3
+node2.left = node4
+node2.right = node5
+node3.left = node6
+node3.right = node7
+
+def inorder(node1):
+    if node1 != None:
+        inorder(node1.left)
+        print(node1.data, end=" ")
+        inorder(node1.right)
+
+print("Inorder traversal:")
+inorder(node1)
+
+
+SLIP 9
+Question 1: Write a program to insert a new node at the end of a linked list (e.g., 200).
+(Exact logic from your 10.51.26 AM notebook & 10.53.43 AM screenshot)
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+node1 = node(5)
+node2 = node(10)
+node3 = node(15)
+node4 = node(20)
+node5 = node(25)
+
+temp = head = node1
+
+node1.next = node2
+node2.next = node3
+node3.next = node4
+node4.next = node5
+
+new = int(input("enter number to add at last (e.g. 200):"))
+newnode = node(new)
+
+while temp.next != None:
+    temp = temp.next
+temp.next = newnode
+
+print("Updated Linked List:")
+temp = head
+while temp is not None:
+    print(temp.data)
+    temp = temp.next
+
+
+Question 2: Write a program to perform Depth First Search (DFS) traversal on the graph {A, B, C, D, E, F}.
+(Same as Slip 1, Question 2)
+def dfs(graph, vertex, visited):
+    visited.add(vertex)
+    print(vertex, end=" ")
+    for neighbour in graph[vertex]:
+        if neighbour not in visited:
+            dfs(graph, neighbour, visited)
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D'],
+    'C': ['E'],
+    'D': ['F'],
+    'E': [],
+    'F': []
+}
+visited = set()
+print("DFS traversal starting from A:")
+dfs(graph, 'A', visited)
+
+
+SLIP 10
+Question 1: Write a program to insert a new node at a given position (e.g., 150 at position 3).
+(Exact logic from your 10.51.21 AM notebook)
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+node1 = node(5)
+node2 = node(10)
+node3 = node(15)
+node4 = node(20)
+node5 = node(25)
+
+temp = head = node1
+
+node1.next = node2
+node2.next = node3
+node3.next = node4
+node4.next = node5
+
+pos = int(input("enter position (e.g. 3):"))
+new = int(input("enter number to insert (e.g. 150):"))
+newnode = node(new)
+
+if pos == 1:
+    newnode.next = head
+    head = newnode
+else:
+    temp = head
+    for i in range(pos - 2):
+        temp = temp.next
+    newnode.next = temp.next
+    temp.next = newnode
+
+print("Updated Linked List:")
+temp = head
+while temp is not None:
+    print(temp.data)
+    temp = temp.next
+
+
+Question 2: Write a Python program to implement Binary Search (iterative version).
+(Same as Slip 2, Question 1)
+l1 = []
+found = 0
+n = int(input("enter size:"))
+for i in range(n):
+    l1.append(int(input("enter sorted element:")))
+
+search = int(input("enter search element:"))
+low = 0
+high = n - 1
+
+while low <= high:
+    mid = (low + high) // 2
+    if l1[mid] == search:
+        print("element found at index", mid)
+        found = 1
+        break
+    elif l1[mid] < search:
+        low = mid + 1
+    else:
+        high = mid - 1
+
+if found == 0:
+    print("element not found")
+
+
+SLIP 11
+Question 1: Write a program to delete the first node of a linked list.
+(Exact code from your 10.51.42 AM notebook)
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+node1 = node(25)
+node2 = node(38)
+node3 = node(76)
+node4 = node(114)
+node5 = node(152)
+
+temp = head = node1
+
+node1.next = node2
+node2.next = node3
+node3.next = node4
+node4.next = node5
+
+# Delete first node
+temp = temp.next
+head = temp
+
+print("List after deleting first node:")
+while head is not None:
+    print(head.data)
+    head = head.next
+
+
+Question 2: Implement a Queue of Characters (Max Size = 4): Accept string, Enqueue each character, Dequeue all to display.
+(Uses your l1.append() and l1.pop(0) queue logic)
+l1 = []
+s = input("enter a string (max 4 chars):")
+
+def enqueue(ch):
+    if len(l1) < 4:
+        l1.append(ch)
+    else:
+        print("Queue is full")
+
+def dequeue():
+    if len(l1) > 0:
+        return l1.pop(0)
+
+for ch in s:
+    enqueue(ch)
+
+print("Queue after enqueue:", l1)
+print("Dequeuing characters in order:")
+while len(l1) > 0:
+    print(dequeue(), end="")
+print()
+
+
+SLIP 12
+Question 1: Write a program to delete the last node of a linked list.
+(Exact code from your 10.52.07 AM notebook)
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+node1 = node(38)
+node2 = node(76)
+node3 = node(114)
+node4 = node(152)
+node5 = node(190)
+
+temp = head = node1
+
+node1.next = node2
+node2.next = node3
+node3.next = node4
+node4.next = node5
+
+# Delete last node
+temp = node1
+while temp.next.next is not None:
+    temp = temp.next
+
+temp.next = None
+head = node1
+
+print("List after deleting last node:")
+while head is not None:
+    print(head.data)
+    head = head.next
+
+
+Question 2: Write a Python program to represent a graph using adjacency list (at least 6 vertices).
+(Same as Slip 3, Question 2)
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D'],
+    'C': ['E'],
+    'D': ['F'],
+    'E': [],
+    'F': []
+}
+print("Adjacency List of the Graph:")
+for vertex in graph:
+    print(vertex, "->", graph[vertex])
+
+
+SLIP 13
+Question 1: Write a program to delete a node from a given position in the linked list (e.g., position 4).
+(Exact code from your 10.51.51 AM notebook)
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+node1 = node(38)
+node2 = node(76)
+node3 = node(114)
+node4 = node(5)
+node5 = node(152)
+
+temp = head = node1
+
+node1.next = node2
+node2.next = node3
+node3.next = node4
+node4.next = node5
+
+pos = int(input("enter position to delete (e.g. 4):"))
+if pos == 1:
+    head = head.next
+else:
+    temp = head
+    for i in range(pos - 2):
+        temp = temp.next
+    temp.next = temp.next.next
+
+print("List after deletion:")
+while head is not None:
+    print(head.data)
+    head = head.next
+
+
+Question 2: Write a program to perform Depth First Search (DFS) traversal on the graph {A, B, C, D, E, F}.
+(Same as Slip 1, Question 2)
+def dfs(graph, vertex, visited):
+    visited.add(vertex)
+    print(vertex, end=" ")
+    for neighbour in graph[vertex]:
+        if neighbour not in visited:
+            dfs(graph, neighbour, visited)
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D'],
+    'C': ['E'],
+    'D': ['F'],
+    'E': [],
+    'F': []
+}
+visited = set()
+print("DFS traversal starting from A:")
+dfs(graph, 'A', visited)
+
+
+SLIP 14
+Question 1: Write a program to search for an element in a linked list (e.g., 25).
+(Combines your class node traversal with found = 0 logic from 1.py)
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+node1 = node(10)
+node2 = node(25)
+node3 = node(50)
+node4 = node(75)
+
+node1.next = node2
+node2.next = node3
+node3.next = node4
+
+head = temp = node1
+search = int(input("enter element to search (e.g. 25):"))
+pos = 1
+found = 0
+
+while temp is not None:
+    if temp.data == search:
+        print("Element found at position", pos)
+        found = 1
+    temp = temp.next
+    pos += 1
+
+if found == 0:
+    print("Not Found")
+
+
+Question 2: Write a Python program to represent a graph using adjacency list (at least 6 vertices).
+(Same as Slip 3, Question 2)
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D'],
+    'C': ['E'],
+    'D': ['F'],
+    'E': [],
+    'F': []
+}
+print("Adjacency List of the Graph:")
+for vertex in graph:
+    print(vertex, "->", graph[vertex])
+
+
+SLIP 15
+Question 1: Menu-driven program: Create a linked list, 1. Display the list, 2. Insert node (beginning).
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+head = None
+
+while True:
+    print("\n1. Create Linked List  2. Display List  3. Insert at Beginning  4. Exit")
+    ch = int(input("Enter choice:"))
+    if ch == 1:
+        n = int(input("Enter number of nodes:"))
+        for i in range(n):
+            val = int(input("Enter data:"))
+            newnode = node(val)
+            if head is None:
+                head = temp = newnode
+            else:
+                temp.next = newnode
+                temp = newnode
+    elif ch == 2:
+        temp = head
+        while temp is not None:
+            print(temp.data, end=" -> ")
+            temp = temp.next
+        print("None")
+    elif ch == 3:
+        val = int(input("Enter data to insert at beginning:"))
+        newnode = node(val)
+        newnode.next = head
+        head = newnode
+    elif ch == 4:
+        break
+
+
+Question 2: Write a program to perform Depth First Search (DFS) traversal on the graph {A, B, C, D, E, F}.
+(Same as Slip 1, Question 2)
+def dfs(graph, vertex, visited):
+    visited.add(vertex)
+    print(vertex, end=" ")
+    for neighbour in graph[vertex]:
+        if neighbour not in visited:
+            dfs(graph, neighbour, visited)
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D'],
+    'C': ['E'],
+    'D': ['F'],
+    'E': [],
+    'F': []
+}
+visited = set()
+print("DFS traversal starting from A:")
+dfs(graph, 'A', visited)
+
+
+SLIP 16
+Question 1: Menu-driven program: 1. Create a linked list, 2. Delete node (end), 3. Search for an element.
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+head = None
+
+while True:
+    print("\n1. Create List  2. Delete End  3. Search  4. Display  5. Exit")
+    ch = int(input("Enter choice:"))
+    if ch == 1:
+        n = int(input("Enter number of nodes:"))
+        for i in range(n):
+            val = int(input("Enter data:"))
+            newnode = node(val)
+            if head is None:
+                head = temp = newnode
+            else:
+                temp.next = newnode
+                temp = newnode
+    elif ch == 2:
+        if head is None:
+            print("List is empty")
+        elif head.next is None:
+            head = None
+        else:
+            temp = head
+            while temp.next.next is not None:
+                temp = temp.next
+            temp.next = None
+            print("Last node deleted")
+    elif ch == 3:
+        search = int(input("Enter element to search:"))
+        temp = head
+        pos = 1
+        found = 0
+        while temp is not None:
+            if temp.data == search:
+                print("Element found at position", pos)
+                found = 1
+            temp = temp.next
+            pos += 1
+        if found == 0:
+            print("Not Found")
+    elif ch == 4:
+        temp = head
+        while temp is not None:
+            print(temp.data, end=" -> ")
+            temp = temp.next
+        print("None")
+    elif ch == 5:
+        break
+
+
+Question 2: Write a Python program to implement Bubble Sort.
+(Same as Slip 3, Question 1)
+l1 = []
+n = int(input("enter size:"))
+for i in range(n):
+    l1.append(int(input("enter element:")))
+
+for i in range(n - 1):
+    for j in range(n - 1 - i):
+        if l1[j] > l1[j + 1]:
+            l1[j], l1[j + 1] = l1[j + 1], l1[j]
+
+print("Sorted list in ascending order:", l1)
+
+
+SLIP 17
+Question 1: Write a program to insert a new node at the end of a linked list (e.g., 200).
+(Same as Slip 9, Question 1)
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+node1 = node(5)
+node2 = node(10)
+node3 = node(15)
+node4 = node(20)
+node5 = node(25)
+
+temp = head = node1
+
+node1.next = node2
+node2.next = node3
+node3.next = node4
+node4.next = node5
+
+new = int(input("enter number to add at last (e.g. 200):"))
+newnode = node(new)
+
+while temp.next != None:
+    temp = temp.next
+temp.next = newnode
+
+print("Updated Linked List:")
+temp = head
+while temp is not None:
+    print(temp.data)
+    temp = temp.next
+
+
+Question 2: Write a Python program to implement Merge Sort.
+(Same as Slip 5, Question 1)
+def merge_sort(l1):
+    if len(l1) > 1:
+        mid = len(l1) // 2
+        left = l1[:mid]
+        right = l1[mid:]
+
+        merge_sort(left)
+        merge_sort(right)
+
+        i = j = k = 0
+        while i < len(left) and j < len(right):
+            if left[i] < right[j]:
+                l1[k] = left[i]
+                i += 1
+            else:
+                l1[k] = right[j]
+                j += 1
+            k += 1
+
+        while i < len(left):
+            l1[k] = left[i]
+            i += 1
+            k += 1
+
+        while j < len(right):
+            l1[k] = right[j]
+            j += 1
+            k += 1
+
+l1 = []
+n = int(input("enter size:"))
+for i in range(n):
+    l1.append(int(input("enter element:")))
+
+merge_sort(l1)
+print("Sorted list in ascending order:", l1)
+
+
+SLIP 18
+Question 1: Implement a class-based linked list with display() and delete_at_position(pos).
+(Uses your OOP style from 10.52.38 AM and deletion logic from 10.51.51 AM)
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def create(self, values):
+        for val in values:
+            newnode = node(val)
+            if self.head is None:
+                self.head = temp = newnode
+            else:
+                temp.next = newnode
+                temp = newnode
+
+    def display(self):
+        temp = self.head
+        while temp is not None:
+            print(temp.data, end=" -> ")
+            temp = temp.next
+        print("None")
+
+    def delete_at_position(self, pos):
+        if pos == 1:
+            self.head = self.head.next
+        else:
+            temp = self.head
+            for i in range(pos - 2):
+                temp = temp.next
+            temp.next = temp.next.next
+
+ll = LinkedList()
+ll.create([10, 20, 30, 40, 50])
+print("Initial List:")
+ll.display()
+
+ll.delete_at_position(3)
+print("After deleting position 3:")
+ll.display()
+
+
+Question 2: Menu-driven dynamic stack using lists with Push and Pop (Display after each iteration).
+(Uses your l1, push(), pop(), display() functions from 10.53.44 AM)
+l1 = []
+
+def display():
+    print("Current Stack:", l1[::-1])
+
+while True:
+    print("\n1. Push  2. Pop  3. Exit")
+    ch = int(input("enter choice:"))
+    if ch == 1:
+        val = int(input("enter element:"))
+        l1.append(val)
+        display()
+    elif ch == 2:
+        if len(l1) == 0:
+            print("stack is empty")
+        else:
+            l1.pop(-1)
+            display()
+    elif ch == 3:
+        break
+
+
+SLIP 19
+Question 1: Implement a Queue using Linked List in Python (Enqueue, Dequeue, Display).
+(Follows your exact class stack linked list style from 10.52.38 AM)
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class queue:
+    def __init__(self):
+        self.front = None
+        self.rear = None
+
+    def enqueue(self, data):
+        newnode = node(data)
+        if self.rear is None:
+            self.front = self.rear = newnode
+        else:
+            self.rear.next = newnode
+            self.rear = newnode
+
+    def dequeue(self):
+        if self.front is None:
+            print("Queue is empty")
+        else:
+            self.front = self.front.next
+            if self.front is None:
+                self.rear = None
+
+    def display(self):
+        paras = self.front
+        while paras is not None:
+            print(paras.data, end=" ")
+            paras = paras.next
+        print()
+
+q = queue()
+q.enqueue(10)
+q.enqueue(20)
+q.enqueue(30)
+print("Queue after Enqueue:")
+q.display()
+
+q.dequeue()
+print("Queue after Dequeue:")
+q.display()
+
+
+Question 2: Write a program to perform Breadth First Search (BFS) traversal on the graph {A, B, C, D, E, F}.
+(Same as Slip 2, Question 2)
+from collections import deque
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D'],
+    'C': ['E'],
+    'D': ['F'],
+    'E': [],
+    'F': []
+}
+def bfs(graph, start):
+    visited = set()
+    queue = deque([start])
+    visited.add(start)
+    while queue:
+        vertex = queue.popleft()
+        print(vertex, end=" ")
+        for neighbour in graph[vertex]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                queue.append(neighbour)
+
+print("BFS traversal:")
+bfs(graph, 'A')
+
+
+SLIP 20
+Question 1: Implement a Queue using Linked List (Integers): Enqueue 5 values, Dequeue 2 elements, Display remaining.
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class queue:
+    def __init__(self):
+        self.front = None
+        self.rear = None
+
+    def enqueue(self, data):
+        newnode = node(data)
+        if self.rear is None:
+            self.front = self.rear = newnode
+        else:
+            self.rear.next = newnode
+            self.rear = newnode
+
+    def dequeue(self):
+        if self.front is not None:
+            self.front = self.front.next
+
+    def display(self):
+        paras = self.front
+        while paras is not None:
+            print(paras.data, end=" ")
+            paras = paras.next
+        print()
+
+q = queue()
+q.enqueue(10)
+q.enqueue(20)
+q.enqueue(30)
+q.enqueue(40)
+q.enqueue(50)
+
+q.dequeue()
+q.dequeue()
+
+print("Remaining Queue after 2 dequeues:")
+q.display()
+
+
+Question 2: Write a Python program to implement Binary Search (iterative version).
+(Same as Slip 2, Question 1)
+l1 = []
+found = 0
+n = int(input("enter size:"))
+for i in range(n):
+    l1.append(int(input("enter sorted element:")))
+
+search = int(input("enter search element:"))
+low = 0
+high = n - 1
+
+while low <= high:
+    mid = (low + high) // 2
+    if l1[mid] == search:
+        print("element found at index", mid)
+        found = 1
+        break
+    elif l1[mid] < search:
+        low = mid + 1
+    else:
+        high = mid - 1
+
+if found == 0:
+    print("element not found")
+
+
+SLIP 21
+Question 1: Implement a Static Queue using List (Fixed Size = 5): Enqueue 5 elements and display after each enqueue.
+(Combines your 10.53.43 AM (1) and 10.53.45 AM screenshots)
+l1 = []
+def enqueue():
+    for i in range(5):
+        val = int(input("enter element:"))
+        if len(l1) < 5:
+            l1.append(val)
+            print("Queue:", l1)
+        else:
+            print("Queue is full")
+
+enqueue()
+
+
+Question 2: Write a program to perform Depth First Search (DFS) traversal on the graph {A, B, C, D, E, F}.
+(Same as Slip 1, Question 2)
+def dfs(graph, vertex, visited):
+    visited.add(vertex)
+    print(vertex, end=" ")
+    for neighbour in graph[vertex]:
+        if neighbour not in visited:
+            dfs(graph, neighbour, visited)
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D'],
+    'C': ['E'],
+    'D': ['F'],
+    'E': [],
+    'F': []
+}
+visited = set()
+print("DFS traversal starting from A:")
+dfs(graph, 'A', visited)
+
+
+SLIP 22
+Question 1: Menu-driven dynamic stack using lists: a. Push, b. Pop, c. Peek, d. Display stack.
+l1 = []
+
+while True:
+    print("\n1. Push  2. Pop  3. Peek  4. Display  5. Exit")
+    ch = int(input("enter choice:"))
+    if ch == 1:
+        val = int(input("enter element:"))
+        l1.append(val)
+    elif ch == 2:
+        if len(l1) == 0:
+            print("Stack is empty")
+        else:
+            print("Popped:", l1.pop(-1))
+    elif ch == 3:
+        if len(l1) == 0:
+            print("Stack is empty")
+        else:
+            print("Top element (Peek):", l1[-1])
+    elif ch == 4:
+        print("Stack:", l1[::-1])
+    elif ch == 5:
+        break
+
+
+Question 2: Construct a binary tree with at least 7 nodes and perform Inorder traversal (recursive).
+(Same as Slip 8, Question 2)
+class node:
+    def __init__(self, data):
+        self.left = None
+        self.right = None
+        self.data = data
+
+node1 = node('A')
+node2 = node('B')
+node3 = node('C')
+node4 = node('D')
+node5 = node('E')
+node6 = node('F')
+node7 = node('G')
+
+node1.left = node2
+node1.right = node3
+node2.left = node4
+node2.right = node5
+node3.left = node6
+node3.right = node7
+
+def inorder(node1):
+    if node1 != None:
+        inorder(node1.left)
+        print(node1.data, end=" ")
+        inorder(node1.right)
+
+print("Inorder traversal:")
+inorder(node1)
+
+
+SLIP 23
+Question 1: Dynamic stack using lists: Push until user types "stop", display stack, pop all elements one by one.
+l1 = []
+
+while True:
+    val = input("enter element (or type 'stop' to finish):")
+    if val == "stop":
+        break
+    l1.append(val)
+
+print("Stack:", l1[::-1])
+
+print("Popping all elements one by one:")
+while len(l1) > 0:
+    print(l1.pop(-1))
+
+
+Question 2: Construct a binary tree with at least 7 nodes and perform Inorder traversal (recursive).
+(Same as Slip 8, Question 2)
+class node:
+    def __init__(self, data):
+        self.left = None
+        self.right = None
+        self.data = data
+
+node1 = node('A')
+node2 = node('B')
+node3 = node('C')
+node4 = node('D')
+node5 = node('E')
+node6 = node('F')
+node7 = node('G')
+
+node1.left = node2
+node1.right = node3
+node2.left = node4
+node2.right = node5
+node3.left = node6
+node3.right = node7
+
+def inorder(node1):
+    if node1 != None:
+        inorder(node1.left)
+        print(node1.data, end=" ")
+        inorder(node1.right)
+
+print("Inorder traversal:")
+inorder(node1)
+
+
+SLIP 24
+Question 1: Static stack of characters (max size 4): Accept string, push each char, pop all to display in reverse.
+l1 = []
+s = input("enter string (max 4 chars):")
+
+for ch in s:
+    if len(l1) < 4:
+        l1.append(ch)
+    else:
+        print("stack is full")
+
+print("Reversed string by popping:")
+while len(l1) > 0:
+    print(l1.pop(-1), end="")
+print()
+
+
+Question 2: Implement a Queue using Linked List (Integers): Enqueue 5 values, Dequeue 2 elements, Display remaining.
+(Same as Slip 20, Question 1)
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class queue:
+    def __init__(self):
+        self.front = None
+        self.rear = None
+
+    def enqueue(self, data):
+        newnode = node(data)
+        if self.rear is None:
+            self.front = self.rear = newnode
+        else:
+            self.rear.next = newnode
+            self.rear = newnode
+
+    def dequeue(self):
+        if self.front is not None:
+            self.front = self.front.next
+
+    def display(self):
+        paras = self.front
+        while paras is not None:
+            print(paras.data, end=" ")
+            paras = paras.next
+        print()
+
+q = queue()
+for val in [10, 20, 30, 40, 50]:
+    q.enqueue(val)
+
+q.dequeue()
+q.dequeue()
+
+print("Remaining Queue:")
+q.display()
+
+
+SLIP 25
+Question 1: Static stack of integers using Python lists: Push N elements (N < stack size), Pop two elements, Display after each.
+(Exact code from your 10.53.44 AM screenshot)
+s = int(input("enter number of elements to push (less than 5):"))
+l1 = []
+def push():
+    for i in range(s):
+        val = int(input("enter element:"))
+        if (len(l1) < 5):
+            l1.append(val)
+            display()
+        else:
+            print("stack is full")
+def pop():
+    l1.pop(-1)
+    display()
+def display():
+    print(l1[::-1])
+
+push()
+display()
+pop()
+pop()
+display()
+
+
+Question 2: Write a Python program to implement Insertion Sort.
+(Same as Slip 4, Question 1)
+l1 = []
+n = int(input("enter size:"))
+for i in range(n):
+    l1.append(int(input("enter element:")))
+
+for i in range(1, n):
+    key = l1[i]
+    j = i - 1
+    while j >= 0 and key < l1[j]:
+        l1[j + 1] = l1[j]
+        j = j - 1
+    l1[j + 1] = key
+
+print("Sorted list in ascending order:", l1)
+
+
+SLIP 26
+Question 1: Static stack (fixed size 5) using a list: Push 5 elements and display the stack after each push.
+(Exact code from your 10.53.43 AM (1) screenshot)
+s = int(input("enter size of list:"))
+l1 = []
+def push():
+    for i in range(s):
+        val = int(input("enter element:"))
+        if (len(l1) < 5):
+            l1.append(val)
+            display()
+        else:
+            print("stack is full")
+def display():
+    print(l1)
+
+push()
+display()
+
+
+Question 2: Write a Python program to implement Merge Sort.
+(Same as Slip 5, Question 1)
+def merge_sort(l1):
+    if len(l1) > 1:
+        mid = len(l1) // 2
+        left = l1[:mid]
+        right = l1[mid:]
+
+        merge_sort(left)
+        merge_sort(right)
+
+        i = j = k = 0
+        while i < len(left) and j < len(right):
+            if left[i] < right[j]:
+                l1[k] = left[i]
+                i += 1
+            else:
+                l1[k] = right[j]
+                j += 1
+            k += 1
+
+        while i < len(left):
+            l1[k] = left[i]
+            i += 1
+            k += 1
+
+        while j < len(right):
+            l1[k] = right[j]
+            j += 1
+            k += 1
+
+l1 = []
+n = int(input("enter size:"))
+for i in range(n):
+    l1.append(int(input("enter element:")))
+
+merge_sort(l1)
+print("Sorted list in ascending order:", l1)
+
+
+
